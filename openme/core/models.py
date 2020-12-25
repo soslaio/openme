@@ -43,3 +43,6 @@ class Transaction(Base):
     to_account = models.ForeignKey('Account', on_delete=models.CASCADE, null=True, blank=True,
                                    related_name='to_transactions')
     notes = models.TextField()
+
+    def __str__(self):
+        return self.description
