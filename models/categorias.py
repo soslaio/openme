@@ -1,0 +1,5 @@
+
+
+class Categoria(object):
+    pass
+
