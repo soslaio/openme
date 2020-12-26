@@ -37,4 +37,4 @@ jobs:
         python openme/manage.py migrate
     - name: Test with pytest
       run: |
-        pytest openme
+        pytest openme -v
