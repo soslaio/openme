@@ -1,1 +1,1 @@
-web: gunicorn openme.openme.asgi:application --log-file -
+web: gunicorn openme.openme.asgi:application
