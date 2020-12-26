@@ -1,1 +1,1 @@
-web: gunicorn openme.wsgi:application --log-file -
+web: gunicorn openme.wsgi:application
