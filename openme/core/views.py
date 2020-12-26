@@ -5,15 +5,14 @@ from .serializers import AccountSerializer, TransactionSerializer
 from rest_framework.response import Response
 
 
-class AccountViewSet(viewsets.ViewSet):
-    def list(self, request):
-        queryset = Account.objects.all()
-        serializer = AccountSerializer(queryset, many=True)
-        return Response(serializer.data)
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
 
 
-class TransactionViewSet(viewsets.ViewSet):
-    def list(self, request):
-        queryset = Transaction.objects.all()
-        serializer = TransactionSerializer(queryset, many=True)
-        return Response(serializer.data)
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+
+

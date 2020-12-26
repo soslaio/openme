@@ -40,10 +40,23 @@ class TestAccount:
         current_balance = account_with_three_transactions.get_current_balance()
         assert current_balance == Decimal(42)
 
-    def test_account_balance_for_future_is_correct(
+    def test_account_balance_is_correct(
         self,
         account_with_three_transactions
     ):
         balance_date = date.today() + timedelta(days=10)
         account_balance = account_with_three_transactions.get_account_balance(balance_date)
         assert account_balance == Decimal(-378)
+
+
+@pytest.mark.django_db
+class TestTransaction:
+    def test_transaction_type(
+        self,
+        debit_transaction,
+        credit_transaction,
+        transfer_transaction
+    ):
+        assert debit_transaction.type == 'debit'
+        assert credit_transaction.type == 'credit'
+        assert transfer_transaction.type == 'transfer'

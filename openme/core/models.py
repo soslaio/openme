@@ -84,5 +84,11 @@ class Transaction(Base):
     def is_transfer(self):
         return self.from_account and self.to_account
 
+    @property
+    def type(self):
+        if self.is_transfer:
+            return 'transfer'
+        return 'credit' if self.ammount > 0 else 'debit'
+
     def __str__(self):
         return self.description

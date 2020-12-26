@@ -1,7 +1,7 @@
 
 import pytest
 from decimal import Decimal
-from core.models import Account, Category
+from core.models import Account, Category, Transaction
 from datetime import date, timedelta
 from django.contrib.auth.models import User
 
@@ -21,6 +21,15 @@ def category(user):
     return Category.objects.create(
         owner=user,
         name='drugs'
+    )
+
+
+@pytest.fixture
+def category_with_parent(category):
+    return Category.objects.create(
+        owner=user,
+        name='drugs',
+        parent_category=category
     )
 
 
@@ -59,3 +68,44 @@ def account_with_three_transactions(account, category):
     )
     return account
 
+
+@pytest.fixture
+def debit_transaction(user, account, category):
+    return Transaction(
+        owner=user,
+        from_account=account,
+        date=date.today(),
+        description='cannabis for everyone',
+        ammount=Decimal(-420.0),
+        category=category
+    )
+
+
+@pytest.fixture
+def credit_transaction(user, account, category):
+    return Transaction(
+        owner=user,
+        from_account=account,
+        date=date.today(),
+        description='money for drugs',
+        ammount=Decimal(420.0),
+        category=category
+    )
+
+
+@pytest.fixture
+def transfer_transaction(user, account, category):
+    to_account = Account(
+        owner=user,
+        name='wallet',
+        opening_balance=Decimal(42.0)
+    )
+    return Transaction(
+        owner=user,
+        from_account=account,
+        to_account=to_account,
+        date=date.today(),
+        description='transfer',
+        ammount=Decimal(420.0),
+        category=category
+    )
