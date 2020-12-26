@@ -2,7 +2,6 @@
 from rest_framework import viewsets
 from .models import Account, Transaction
 from .serializers import AccountSerializer, TransactionSerializer
-from rest_framework.response import Response
 
 
 class AccountViewSet(viewsets.ModelViewSet):
@@ -13,6 +12,3 @@ class AccountViewSet(viewsets.ModelViewSet):
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-
-
-
