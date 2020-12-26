@@ -1,2 +1,1 @@
-release: python manage.py makemigrations && python manage.py migrate
-web: gunicorn openme.wsgi:application
+web: DJANGO_SETTINGS_MODULE=openme.settings.heroku gunicorn openme.wsgi:application
