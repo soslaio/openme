@@ -1,1 +1,1 @@
-web: gunicorn openme.openme.asgi:application
+web: gunicorn openme.openme.wsgi:application
