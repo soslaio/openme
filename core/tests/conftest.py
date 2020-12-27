@@ -10,12 +10,12 @@ from django.contrib.auth.models import User
 
 @pytest.fixture
 def user():
-    return User.objects.create_user('xunda')
+    return User.objects.create_user('snoopdogg')
 
 
 @pytest.fixture
 def super_user():
-    return User.objects.create_superuser('superxunda')
+    return User.objects.create_superuser('snoopzilla')
 
 
 @pytest.fixture
@@ -27,10 +27,29 @@ def category(user):
 
 
 @pytest.fixture
-def category_with_parent(category):
+def category_with_one_child(category):
+    category.create_child_category(
+        name='licit'
+    )
+    return category
+
+
+@pytest.fixture
+def category_with_two_children(category):
+    category.create_child_category(
+        name='licit'
+    )
+    category.create_child_category(
+        name='illicit'
+    )
+    return category
+
+
+@pytest.fixture
+def category_with_parent(user, category):
     return Category.objects.create(
         owner=user,
-        name='drugs',
+        name='illicit',
         parent_category=category
     )
 
@@ -39,33 +58,42 @@ def category_with_parent(category):
 def account(user):
     return Account.objects.create(
         owner=user,
-        name='piggy bank',
-        opening_balance=Decimal(882.0)
+        name='teapot',
+        opening_balance=Decimal(126.0)
     )
+
+
+@pytest.fixture
+def account_with_one_transactions(account, category_with_parent):
+    account.create_related_transaction(
+        transaction_date=date.today(),
+        description='cannabis for recreational use',
+        ammount=Decimal(-42.0),
+        category_id=category_with_parent.id
+    )
+    return account
 
 
 @pytest.fixture
 def account_with_three_transactions(account, category):
     today = date.today()
-    yesterday = today + timedelta(days=-1)
-    tomorrow = today + timedelta(days=1)
     account.create_related_transaction(
-        transaction_date=yesterday,
+        transaction_date=today + timedelta(days=-1),
         description='cannabis for recreational use',
-        ammount=Decimal(-420.0),
+        ammount=Decimal(-42.0),
         category_id=category.id,
         notes='banzai'
     )
     account.create_related_transaction(
         transaction_date=today,
         description='cannabis for medical use',
-        ammount=Decimal(-420.0),
+        ammount=Decimal(-42.0),
         category_id=category.id
     )
     account.create_related_transaction(
-        transaction_date=tomorrow,
+        transaction_date=today + timedelta(days=1),
         description='cannabis for religious use',
-        ammount=Decimal(-420.0),
+        ammount=Decimal(-42.0),
         category_id=category.id
     )
     return account
@@ -78,7 +106,7 @@ def debit_transaction(user, account, category):
         from_account=account,
         date=date.today(),
         description='cannabis for everyone',
-        ammount=Decimal(-420.0),
+        ammount=Decimal(-42.0),
         category=category
     )
 
@@ -90,7 +118,7 @@ def credit_transaction(user, account, category):
         from_account=account,
         date=date.today(),
         description='money for drugs',
-        ammount=Decimal(420.0),
+        ammount=Decimal(42.0),
         category=category
     )
 
@@ -108,6 +136,6 @@ def transfer_transaction(user, account, category):
         to_account=to_account,
         date=date.today(),
         description='transfer',
-        ammount=Decimal(420.0),
+        ammount=Decimal(42.0),
         category=category
     )

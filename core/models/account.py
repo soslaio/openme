@@ -19,6 +19,7 @@ class Account(Base):
         description: str,
         ammount: Decimal,
         category_id: uuid,
+        to_account_id: uuid = None,
         notes: str = None
     ):
         return Transaction.objects.create(
@@ -27,7 +28,8 @@ class Account(Base):
             description=description,
             ammount=ammount,
             category_id=category_id,
-            from_account_id=self.id,
+            from_account=self,
+            to_account_id=to_account_id,
             notes=notes
         )
 
