@@ -1,7 +1,8 @@
 
 import pytest
 from decimal import Decimal
-from core.models import Account, Category
+from core.models.account import Account
+from core.models.category import Category
 from datetime import date, timedelta
 
 

@@ -1,7 +1,9 @@
 
 import pytest
 from decimal import Decimal
-from core.models import Account, Category, Transaction
+from core.models.account import Account
+from core.models.category import Category
+from core.models.transaction import Transaction
 from datetime import date, timedelta
 from django.contrib.auth.models import User
 
@@ -47,20 +49,20 @@ def account_with_three_transactions(account, category):
     today = date.today()
     yesterday = today + timedelta(days=-1)
     tomorrow = today + timedelta(days=1)
-    account.add_transaction(
+    account.create_related_transaction(
         transaction_date=yesterday,
         description='cannabis for recreational use',
         ammount=Decimal(-420.0),
         category_id=category.id,
         notes='banzai'
     )
-    account.add_transaction(
+    account.create_related_transaction(
         transaction_date=today,
         description='cannabis for medical use',
         ammount=Decimal(-420.0),
         category_id=category.id
     )
-    account.add_transaction(
+    account.create_related_transaction(
         transaction_date=tomorrow,
         description='cannabis for religious use',
         ammount=Decimal(-420.0),

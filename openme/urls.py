@@ -8,6 +8,7 @@ from core import views
 router = routers.DefaultRouter()
 router.register(r'accounts', views.AccountViewSet, basename='accounts')
 router.register(r'transactions', views.TransactionViewSet, basename='transactions')
+router.register(r'categories', views.CategoryViewSet, basename='categories')
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -1,6 +1,8 @@
 
 from django.contrib import admin
-from .models import Category, Account, Transaction
+from .models.account import Account
+from .models.category import Category
+from .models.transaction import Transaction
 
 
 admin.site.register(Account)
