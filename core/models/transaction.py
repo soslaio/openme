@@ -12,6 +12,7 @@ class Transaction(Base):
     to_account = models.ForeignKey('Account', on_delete=models.CASCADE, null=True, blank=True,
                                    related_name='to_transactions')
     notes = models.TextField(null=True, blank=True)
+    consolidated = models.BooleanField(default=False)
 
     @property
     def is_transfer(self):
